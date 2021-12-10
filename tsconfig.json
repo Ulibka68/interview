@@ -9,7 +9,7 @@
       "es2019",
       "DOM"
     ],                                   /* Specify library files to be included in the compilation. */
-    "jsx": "preserve",                           /* Specify JSX code generation: 'preserve', 'react-native', 'react', 'react-jsx' or 'react-jsxdev'. */
+    "jsx": "react-jsx",                           /* Specify JSX code generation: 'preserve', 'react-native', 'react', 'react-jsx' or 'react-jsxdev'. */
     "strict": true,                                 /* Enable all strict type-checking options. */
     "baseUrl": "./",                             /* Base directory to resolve non-absolute module names. */
     "paths": {
@@ -19,6 +19,14 @@
     },                                 /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     "esModuleInterop": true,                        /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     "skipLibCheck": true,                           /* Skip type checking of declaration files. */
-    "forceConsistentCasingInFileNames": true        /* Disallow inconsistently-cased references to the same file. */
+    "forceConsistentCasingInFileNames": true,        /* Disallow inconsistently-cased references to the same file. */
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "classnameTransform": "asIs",
+        }
+      }
+    ]
   }
 }

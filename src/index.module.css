@@ -1,5 +1,6 @@
-.h1-background {
+.h1Background {
     background-color: limegreen;
+    transform: translateX(10px);
 }
 
 :global .h1-global {
@@ -11,7 +12,12 @@
 }
 
 
-.h1-background:global(.color1) {
+.h1Background:global(.color1) {
     background-color: lightblue;
     color: red;
+}
+
+:global ::placeholder {
+    color: gray;
+    display:grid;
 }

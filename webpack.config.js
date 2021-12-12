@@ -1,5 +1,50 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const devMode = process.env.NODE_ENV !== 'production';
+
+function cssModulesConfig() {
+  const baseConfig = [
+    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+    {
+      loader: 'css-loader',
+      options: {
+        modules: {
+          mode: 'local',
+          auto: true,
+          localIdentName: '[local]--[hash:base64:5]',
+          exportGlobals: true,
+          localIdentContext: path.resolve(__dirname, 'src'),
+          exportOnlyLocals: false,
+          exportLocalsConvention: 'camelCase',
+        },
+      },
+    },
+  ];
+
+  if (!devMode) {
+    baseConfig.push({
+      loader: 'postcss-loader',
+      options: {
+        postcssOptions: {
+          plugins: [
+            [
+              'postcss-preset-env',
+              {
+                // Options
+                stage: 2,
+                browsers: 'last 4 version',
+              },
+            ],
+          ],
+        },
+      },
+    });
+  }
+
+  baseConfig.push('sass-loader');
+  return baseConfig;
+}
 
 module.exports = {
   entry: './src/index.tsx',
@@ -26,30 +71,19 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        test: /\.(sa|sc|c)ss$/i,
+
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
         exclude: /\.module\.css$/,
       },
       {
         test: /\.module\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: {
-                mode: 'local',
-                auto: true,
-                localIdentName: '[local]--[hash:base64:5]',
-                exportGlobals: true,
-                localIdentContext: path.resolve(__dirname, 'src'),
-                // namedExport: true, // проблема с доступом по default
-                exportOnlyLocals: false,
-                exportLocalsConvention: 'camelCase',
-              },
-            },
-          },
-        ],
+        use: cssModulesConfig(),
         include: /\.module\.css$/,
       },
       {
@@ -73,6 +107,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
+    new MiniCssExtractPlugin(),
   ],
   optimization: {
     runtimeChunk: 'single',

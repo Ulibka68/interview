@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/"
+    "url": "git+https://github.com/Ulibka68/interview"
   },
   "keywords": [
     "React",
     "Redux"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/",
+  "homepage": "https://github.com/Ulibka68/interview",
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.4",

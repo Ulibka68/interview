@@ -18,47 +18,43 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         use: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.ts(x)?$/,
         loader: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
-        exclude: /\.module\.css$/
+        exclude: /\.module\.css$/,
       },
       {
-        test: /\.css$/,
+        test: /\.module\.css$/,
         use: [
-          // 'style-loader',
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1,
               modules: {
-                mode: "local",
+                mode: 'local',
                 auto: true,
+                localIdentName: '[local]--[hash:base64:5]',
                 exportGlobals: true,
-                localIdentName: "[path][name]__[local]--[hash:base64:5]",
-                namedExport: true,
-                exportLocalsConvention: "camelCase",
+                localIdentContext: path.resolve(__dirname, 'src'),
+                // namedExport: true, // проблема с доступом по default
                 exportOnlyLocals: false,
-              }
-            }
-          }
+                exportLocalsConvention: 'camelCase',
+              },
+            },
+          },
         ],
-        include: /\.module\.css$/
+        include: /\.module\.css$/,
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(png|jpg|gif|svg)$/i,
@@ -85,9 +81,9 @@ module.exports = {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          chunks: 'all'
-        }
-      }
-    }
-  }
+          chunks: 'all',
+        },
+      },
+    },
+  },
 };

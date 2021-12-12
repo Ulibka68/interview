@@ -1,3 +1,17 @@
-.h1Background {
+.h1-background {
     background-color: limegreen;
+}
+
+:global .h1-global {
+    background-color:yellow;
+}
+
+:global .color1 {
+    color: blue;
+}
+
+
+.h1-background:global(.color1) {
+    background-color: lightblue;
+    color: red;
 }
